@@ -1,0 +1,23 @@
+{
+  "name": "iud-inventory",
+  "version": "0.0.1",
+  "description": "aplicación web en donde se registren",
+  "main": "bin/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon bin/server.js"
+  },
+  "keywords": [
+    "Inventario",
+    "Express",
+    "Node.js",
+    "JSON",
+    "MongoDB",
+    "IUDigital",
+    "Web",
+    "API",
+    "Rest"
+  ],
+  "author": "@iudigital",
+  "license": "MIT"
+}
