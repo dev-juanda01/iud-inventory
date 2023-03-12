@@ -1,0 +1,13 @@
+:root {
+  --primary-color: #203f58;
+  --second-color: #ffffff;
+}
+body {
+  background-color: var(--primary-color);
+  color: var(--second-color);
+}
+header {
+  width: 70%;
+  margin: auto;
+  font-family: sans-serif;
+}
