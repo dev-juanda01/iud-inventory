@@ -6,7 +6,7 @@ class CtrlTipoEquipo {
   constructor() {}
 
   async obtenerTipoEquipo(req, res) {
-    let idTE = req.params.idTE;
+    let nombre = req.query;
 
     try {
       const tipoEquipo = await modeloTipoEquipo.findById(idTE);

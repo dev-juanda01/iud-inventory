@@ -9,7 +9,7 @@ const express = require("express"),
   faviconURL = `${__dirname}/public/img/logo-iud.png`,
   publicDir = express.static(`${__dirname}/public`),
   viewDir = `${__dirname}/views`,
-  routes = require("./routes/routerTE"),
+  routesTE = require("./routes/routerTE"),
   port = process.env.PORT || 5000,
   app = express();
 
@@ -18,7 +18,7 @@ app
   .use(favicon(faviconURL))
   .use(morgan("dev"))
   .use(publicDir)
-  .use("/api/tipoequipos", routes)
+  .use("/api/tipoequipos", routesTE)
   .use(bodyParser.urlencoded({ extended: false }))
   .use(bodyParser.json());
 

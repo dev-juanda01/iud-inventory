@@ -3,10 +3,23 @@
 const mongoose = require("mongoose"),
   Schema = mongoose.Schema,
   tipoEquipoSchema = Schema({
-    nombre: String,
-    estado: { type: String, enum: ["activo", "inactivo"] },
-    fechaCreacion: String,
-    fechaActualizacion: String,
+    nombre: {
+      type: String,
+      required: true,
+      enum: ["computo", "moviles"],
+    },
+    estado: {
+      type: Boolean,
+      required: true,
+    },
+    fechaCreacion: {
+      type: Date,
+      default: new Date(),
+    },
+    fechaActualizacion: {
+      type: Date,
+      default: new Date(),
+    },
   });
 
 module.exports = mongoose.model("tipoEquipo", tipoEquipoSchema);
