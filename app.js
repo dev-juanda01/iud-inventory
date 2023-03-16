@@ -10,6 +10,7 @@ const express = require("express"),
   publicDir = express.static(`${__dirname}/public`),
   viewDir = `${__dirname}/views`,
   routesTE = require("./routes/routerTE"),
+  routesEE = require("./routes/ruterEE"),
   port = process.env.PORT || 5000,
   app = express();
 
@@ -19,6 +20,7 @@ app
   .use(morgan("dev"))
   .use(publicDir)
   .use("/api/tipoequipos", routesTE)
+  .use("/api/estadoequipos", routesEE)
   .use(bodyParser.urlencoded({ extended: false }))
   .use(bodyParser.json());
 
