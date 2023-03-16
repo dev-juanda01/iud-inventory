@@ -9,7 +9,7 @@ class CtrlTipoEquipo {
     let nombre = req.query;
 
     try {
-      const tipoEquipo = await modeloTipoEquipo.findById(idTE);
+      const tipoEquipo = await modeloTipoEquipo.find({ nombre });
       if (!tipoEquipo) {
         return res.status(404).send({});
       }
@@ -19,7 +19,24 @@ class CtrlTipoEquipo {
       return res.status(500).send({});
     }
   }
-  obtenerTipoEquipos(req, res) {}
+
+  async obtenerTipoEquipos(req, res) {
+    try {
+      const tipoEquipos = await modeloTipoEquipo.find({});
+      console.log(tipoEquipos);
+
+      if (tipoEquipos.length == 0)
+        return res
+          .status(404)
+          .send({ message: `No se ecuentran tipos de equipos` });
+
+      res.status(200).send({ tipoEquipos });
+    } catch (error) {
+      return res
+        .status(500)
+        .send({ message: `Error al consultar en la base de datos ${error}` });
+    }
+  }
   ingresarTipoEquipo(req, res) {}
   actualizarTipoEquipo(req, res) {}
   eliminarTipoEquipo(req, res) {}

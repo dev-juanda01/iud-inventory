@@ -5,9 +5,7 @@ const express = require("express"),
   controllerTE = require(`../controllers/ctrlTipoEquipo`);
 
 router
-  .get("/", (req, res, next) => {
-    res.render("home");
-  })
-  .get("/api/tipoEquipo/:idTE", controllerTE.obtenerTipoEquipo);
+  // .get("/api/tipoequipos", controllerTE.obtenerTipoEquipo)
+  .get("/", controllerTE.obtenerTipoEquipos);
 
 module.exports = router;

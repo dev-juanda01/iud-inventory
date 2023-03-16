@@ -22,4 +22,4 @@ const mongoose = require("mongoose"),
     },
   });
 
-module.exports = mongoose.model("tipoEquipo", tipoEquipoSchema);
+module.exports = mongoose.model("modeloTipoEquipo", tipoEquipoSchema);
