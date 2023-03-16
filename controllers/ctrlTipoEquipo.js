@@ -6,12 +6,12 @@ class CtrlTipoEquipo {
   constructor() {}
 
   async obtenerTipoEquipo(req, res) {
-    let nombre = req.query;
-
     try {
+      let nombre = req.query.nombre;
       const tipoEquipo = await modeloTipoEquipo.find({ nombre });
-      if (!tipoEquipo) {
-        return res.status(404).send({});
+
+      if (tipoEquipo.length == 0) {
+        return res.status(404).send({ message: `tipo no encontrado` });
       }
 
       return res.status(200).send(tipoEquipo);
@@ -37,7 +37,22 @@ class CtrlTipoEquipo {
         .send({ message: `Error al consultar en la base de datos ${error}` });
     }
   }
-  ingresarTipoEquipo(req, res) {}
+  async ingresarTipoEquipo(req, res) {
+    console.log(req.body);
+    try {
+      let nuevoTipoEquipo = new modeloTipoEquipo();
+
+      nuevoTipoEquipo.nombre = req.body.nombre;
+      nuevoTipoEquipo.estado = req.body.estado;
+
+      nuevoTipoEquipo.save();
+      return res.status(201).send({ nuevoTipoEquipo });
+    } catch (error) {
+      return res
+        .status(500)
+        .send({ message: `Error al conectar a la base de datos ${error}` });
+    }
+  }
   actualizarTipoEquipo(req, res) {}
   eliminarTipoEquipo(req, res) {}
 }
