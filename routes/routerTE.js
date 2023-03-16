@@ -5,7 +5,8 @@ const express = require("express"),
   controllerTE = require(`../controllers/ctrlTipoEquipo`);
 
 router
-  // .get("/api/tipoequipos", controllerTE.obtenerTipoEquipo)
-  .get("/", controllerTE.obtenerTipoEquipos);
+  .get("/", controllerTE.obtenerTipoEquipo)
+  // .get("/", controllerTE.obtenerTipoEquipos)
+  .post("/", controllerTE.ingresarTipoEquipo);
 
 module.exports = router;

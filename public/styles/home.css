@@ -5,10 +5,17 @@
 body {
   background-color: var(--primary-color);
   color: var(--second-color);
+  font-family: sans-serif;
 }
 header {
   width: 70%;
   margin: auto;
-  font-family: sans-serif;
   padding-top: 1.2rem;
+}
+main {
+  width: 70%;
+  margin: auto;
+}
+a {
+  color: var(--second-color);
 }

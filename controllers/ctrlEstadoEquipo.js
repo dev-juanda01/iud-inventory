@@ -37,7 +37,7 @@ class CtrlEstadoEquipo {
       return res.status(201).send({ nuevoEstadoEquipo });
     } catch (error) {
       return res;
-       .statu(500)
+       .status(500),
        .send({message: "error al conectar la base de datos " })
     }
   }
