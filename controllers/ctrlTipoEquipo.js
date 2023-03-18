@@ -26,7 +26,7 @@ class CtrlTipoEquipo {
       if (req.query.nombre) return next();
 
       const tipoEquipos = await modeloTipoEquipo.find({});
-      console.log(tipoEquipos);
+      // console.log(tipoEquipos);
 
       if (tipoEquipos.length == 0)
         return res
