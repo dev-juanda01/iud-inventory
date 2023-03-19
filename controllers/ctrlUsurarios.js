@@ -61,6 +61,28 @@ class CtrlUsuario {
         .send({ message: `Error al consutar en la base de datos ${error}` });
     }
   }
+
+  async actualizarUsuario(req, res) {
+    try {
+      let id = await req.query.id,
+        data = req.body;
+
+      const usuario = await modeloUsuarios.findByIdAndUpdate(id, data, {
+        new: true,
+      });
+
+      if (usuario)
+        return res
+          .status(404)
+          .send({ message: `El usuario con id ${id} no existe` });
+
+      res.status(200).send(usuario);
+    } catch (error) {
+      return res
+        .status(500)
+        .send({ message: `Error al consultar en la base de datos ${error}` });
+    }
+  }
 }
 
 module.exports = new CtrlUsuario();
