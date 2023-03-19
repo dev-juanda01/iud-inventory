@@ -7,7 +7,7 @@ class CtrlTipoEquipo {
 
   async obtenerTipoEquipo(req, res) {
     try {
-      let nombre = req.query.nombre;
+      let nombre = req.query.nombre.toUpperCase();
       const tipoEquipo = await modeloTipoEquipo.find({ nombre });
 
       if (tipoEquipo.length == 0) {

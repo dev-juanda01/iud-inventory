@@ -17,5 +17,7 @@ main {
   margin: auto;
 }
 a {
+  display: block;
   color: var(--second-color);
+  padding: 0.7rem 0;
 }

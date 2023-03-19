@@ -6,19 +6,35 @@ class CtrlEstadoEquipo {
   constructor() {}
 
   async obtenerEstadoEquipo(req, res) {
-    let estado = req.query.estado;
-
     try {
+      let nombre = await req.query.nombre.tuUpperCase();
+      const estadoEqipo = await modeloEstadoEquipo.find({ nombre });
+
+      if (estadoEqipo.length == 0)
+        return res.status(404).send({ message: `No hay estados a consultar` });
+
+      res.status(200).send(estadoEqipo);
+    } catch (error) {
+      return res
+        .status(500)
+        .send({ message: "Error al consultar a la base de datos" });
+    }
+  }
+
+  async obtenerEstadoEquipos(req, res) {
+    try {
+      let estado = req.query.estado;
       const estadoEquipo = await modeloEstadoEquipo.find({ estado });
-      if (estadoEquipo) {
+
+      if (estadoEquipo.length == 0) {
         return res
           .status(404)
           .send({ message: `No se ecuentran tipos de equipos` });
       }
 
-      return res.status(200).send(estadoEquipo);
+      return res.status(200).send({ estadoEquipo });
     } catch (error) {
-      return res.status(500).send({});
+      return res.status(500).send({ message: `Error al consultar ${error}` });
     }
   }
 
@@ -27,23 +43,17 @@ class CtrlEstadoEquipo {
     try {
       let nuevoEstadoEquipo = new modeloEstadoEquipo();
 
-      nuevoEstadoEquipo.nombre = req.body.nombre;
+      nuevoEstadoEquipo.nombre = req.body.nombre.toUpperCase();
       nuevoEstadoEquipo.estado = req.body.estado;
-      nuevoEstadoEquipo.fechaCreacion = req.body.fechaCreacion;
-      nuevoEstadoEquipo.fechaActualizacion = req.body.fechaActualizacion;
 
       nuevoEstadoEquipo.save();
-
-      return res.status(201).send({ nuevoEstadoEquipo });
+      return res.status(201).send(nuevoEstadoEquipo);
     } catch (error) {
-      return res;
-       .status(500),
-       .send({message: "error al conectar la base de datos " })
+      return res
+        .status(500)
+        .send({ message: "error al conectar la base de datos " });
     }
   }
-
-
-  ingresarEstadoEquipo(req, res) {}
   actualizarEstadoEquipo(req, res) {}
   eliminarEstadoEquipo(req, res) {}
 }

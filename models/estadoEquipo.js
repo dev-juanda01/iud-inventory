@@ -5,7 +5,7 @@ const mongoose = require("mongoose"),
     nombre: {
       type: String,
       required: true,
-      enum: ["en uso", "en bodega", "depreciado"],
+      enum: ["EN USO", "EN BODEGA", "DEPRECIADO"],
     },
     estado: {
       type: Boolean,
