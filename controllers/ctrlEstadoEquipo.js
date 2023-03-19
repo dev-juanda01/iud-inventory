@@ -1,5 +1,6 @@
 "use strict";
 
+const estadoEquipo = require("../models/estadoEquipo");
 const modeloEstadoEquipo = require("../models/estadoEquipo");
 
 class CtrlEstadoEquipo {
@@ -29,19 +30,16 @@ class CtrlEstadoEquipo {
 
       nuevoEstadoEquipo.nombre = req.body.nombre;
       nuevoEstadoEquipo.estado = req.body.estado;
-      nuevoEstadoEquipo.fechaCreacion = req.body.fechaCreacion;
-      nuevoEstadoEquipo.fechaActualizacion = req.body.fechaActualizacion;
 
       nuevoEstadoEquipo.save();
 
       return res.status(201).send({ nuevoEstadoEquipo });
     } catch (error) {
-      return res;
-       .status(500),
-       .send({message: "error al conectar la base de datos " })
+      return res
+        .status(500)
+        .send({ message: `Error al conectar a la base de datos ${error}` });
     }
   }
-
 
   ingresarEstadoEquipo(req, res) {}
   actualizarEstadoEquipo(req, res) {}
