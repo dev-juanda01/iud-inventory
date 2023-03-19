@@ -71,7 +71,7 @@ class CtrlUsuario {
         new: true,
       });
 
-      if (usuario)
+      if (!usuario)
         return res
           .status(404)
           .send({ message: `El usuario con id ${id} no existe` });
@@ -83,6 +83,8 @@ class CtrlUsuario {
         .send({ message: `Error al consultar en la base de datos ${error}` });
     }
   }
+
+  async eliminarUsuario() {}
 }
 
 module.exports = new CtrlUsuario();
