@@ -6,6 +6,7 @@ const express = require("express"),
 
 router
   .get("/", controllerEE.obtenerEstadoEquipos)
+  .get("/", controllerEE.obtenerEstadoEquipo)
   .post("/", controllerEE.ingresarEstadoEquipo);
 
 module.exports = router;

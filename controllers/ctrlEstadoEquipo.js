@@ -7,29 +7,43 @@ class CtrlEstadoEquipo {
 
   async obtenerEstadoEquipo(req, res) {
     try {
-      let nombre = await req.query.nombre.tuUpperCase();
+      let llave = "nombre",
+        reqLlaves = Object.keys(req.query);
+
+      if (!reqLlaves.includes(llave))
+        return res
+          .status(400)
+          .send({ message: `Error en el nombre de la llave` });
+
+      let nombre = await req.query.nombre.toUpperCase();
       const estadoEqipo = await modeloEstadoEquipo.find({ nombre });
 
+      console.log(nombre, estadoEqipo);
+
       if (estadoEqipo.length == 0)
-        return res.status(404).send({ message: `No hay estados a consultar` });
+        return res
+          .status(404)
+          .send({ message: `El estado ${nombre} no es una opción admitida` });
 
       res.status(200).send(estadoEqipo);
     } catch (error) {
       return res
         .status(500)
-        .send({ message: "Error al consultar a la base de datos" });
+        .send({ message: `Error al consultar a la base de datos ${error}` });
     }
   }
 
-  async obtenerEstadoEquipos(req, res) {
+  async obtenerEstadoEquipos(req, res, next) {
     try {
-      let estado = req.query.estado;
-      const estadoEquipo = await modeloEstadoEquipo.find({ estado });
+      let llaves = Object.keys(req.query);
+      if (llaves.length != 0) return next();
+
+      const estadoEquipo = await modeloEstadoEquipo.find({});
 
       if (estadoEquipo.length == 0) {
         return res
           .status(404)
-          .send({ message: `No se ecuentran tipos de equipos` });
+          .send({ message: `No se ecuentran estados de equipos` });
       }
 
       return res.status(200).send({ estadoEquipo });
