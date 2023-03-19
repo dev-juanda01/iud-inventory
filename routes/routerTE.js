@@ -5,8 +5,10 @@ const express = require("express"),
   controllerTE = require(`../controllers/ctrlTipoEquipo`);
 
 router
+  .get("/", controllerTE.obtenerTipoEquipos)
   .get("/", controllerTE.obtenerTipoEquipo)
-  // .get("/", controllerTE.obtenerTipoEquipos)
-  .post("/", controllerTE.ingresarTipoEquipo);
+  .post("/", controllerTE.ingresarTipoEquipo)
+  .put("/", controllerTE.actualizarTipoEquipo)
+  .delete("/", controllerTE.eliminarTipoEquipo);
 
 module.exports = router;

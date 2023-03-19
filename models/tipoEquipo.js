@@ -6,7 +6,7 @@ const mongoose = require("mongoose"),
     nombre: {
       type: String,
       required: true,
-      enum: ["computo", "moviles"],
+      enum: ["COMPUTO", "MOVILES"],
     },
     estado: {
       type: Boolean,

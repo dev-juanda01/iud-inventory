@@ -7,19 +7,38 @@ class CtrlEstadoEquipo {
   constructor() {}
 
   async obtenerEstadoEquipo(req, res) {
-    let estado = req.query.estado;
-
     try {
-      const estadoEquipo = await modeloEstadoEquipo.find({ estado });
-      if (estadoEquipo) {
+      let nombre = await req.query.nombre.toUpperCase();
+      const estadoEqipo = await modeloEstadoEquipo.find({ nombre });
+
+      if (estadoEqipo.length == 0)
         return res
           .status(404)
-          .send({ message: `No se ecuentran tipos de equipos` });
+          .send({ message: `el estado ${nombre} no es un estado valido` });
+
+      res.status(200).send(estadoEqipo);
+    } catch (error) {
+      return res
+        .status(500)
+        .send({ message: "Error al consultar a la base de datos" });
+    }
+  }
+
+  async obtenerEstadoEquipos(req, res, next) {
+    try {
+      if (req.query.nombre) return next();
+
+      const estadoEquipo = await modeloEstadoEquipo.find({});
+
+      if (estadoEquipo.length == 0) {
+        return res
+          .status(404)
+          .send({ message: `No se ecuentran estados de equipos` });
       }
 
-      return res.status(200).send(estadoEquipo);
+      return res.status(200).send({ estadoEquipo });
     } catch (error) {
-      return res.status(500).send({});
+      return res.status(500).send({ message: `Error al consultar ${error}` });
     }
   }
 
@@ -28,22 +47,53 @@ class CtrlEstadoEquipo {
     try {
       let nuevoEstadoEquipo = new modeloEstadoEquipo();
 
-      nuevoEstadoEquipo.nombre = req.body.nombre;
+      nuevoEstadoEquipo.nombre = req.body.nombre.toUpperCase();
       nuevoEstadoEquipo.estado = req.body.estado;
 
       nuevoEstadoEquipo.save();
-
-      return res.status(201).send({ nuevoEstadoEquipo });
+      return res.status(201).send(nuevoEstadoEquipo);
     } catch (error) {
       return res
         .status(500)
-        .send({ message: `Error al conectar a la base de datos ${error}` });
+        .send({ message: "error al conectar la base de datos " });
     }
   }
+  async actualizarEstadoEquipo(req, res) {
+    try {
+      let idEstadoEquipo = req.query.id,
+        dataEstadoEquipo = req.body,
+        findEstadoEquipo = await modeloEstadoEquipo.findByIdAndUpdate(
+          idEstadoEquipo,
+          dataEstadoEquipo,
+          { new: true }
+        );
 
-  ingresarEstadoEquipo(req, res) {}
-  actualizarEstadoEquipo(req, res) {}
-  eliminarEstadoEquipo(req, res) {}
+      if (findEstadoEquipo == undefined) {
+        return res.status(404).send({
+          message: `El Estado de equipo con el id ${idEstadoEquipo} no existe`,
+        });
+      }
+
+      return res.status(200).send({ findEstadoEquipo });
+    } catch (error) {}
+  }
+
+  async eliminarEstadoEquipo(req, res) {
+    let idEstadoEquipo = await req.query.id,
+      findEstadoEquipo = await modeloEstadoEquipo.findByIdAndDelete(
+        idEstadoEquipo
+      );
+
+    if (findEstadoEquipo == undefined) {
+      return res.status(404).send({
+        message: `El estado de equipo con el id ${idEstadoEquipo} no existe`,
+      });
+    }
+
+    return res
+      .status(200)
+      .send({ message: `el Estado de equipo ha sido eliminado` });
+  }
 }
 
 module.exports = new CtrlEstadoEquipo();
