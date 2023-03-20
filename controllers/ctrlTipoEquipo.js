@@ -1,11 +1,12 @@
 "use strict";
 
-const modeloTipoEquipo = require("../models/tipoEquipo");
+const modeloTipoEquipo = require("../models/tipoEquipo"),
+  { request, response } = require("express");
 
 class CtrlTipoEquipo {
   constructor() {}
 
-  async obtenerTipoEquipo(req, res) {
+  async obtenerTipoEquipo(req = request, res = response) {
     try {
       let nombre = req.query.nombre.toUpperCase();
       const tipoEquipo = await modeloTipoEquipo.find({ nombre });
@@ -44,9 +45,15 @@ class CtrlTipoEquipo {
   async ingresarTipoEquipo(req, res) {
     console.log(req.body);
     try {
+      let nombre = req.body.nombre ? req.body.nombre.toUpperCase() : "",
+        buscarTipo = await modeloTipoEquipo.find({ nombre });
+
+      if (buscarTipo)
+        return res.status(404).send({ message: `El tipo ya existe` });
+
       let nuevoTipoEquipo = new modeloTipoEquipo();
 
-      nuevoTipoEquipo.nombre = req.body.nombre.toUpperCase();
+      nuevoTipoEquipo.nombre = nombre;
       nuevoTipoEquipo.estado = req.body.estado;
 
       nuevoTipoEquipo.save();

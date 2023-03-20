@@ -13,6 +13,7 @@ const express = require("express"),
   routesView = require("./routes/routerView"),
   routesEE = require("./routes/ruterEE"),
   routesU = require("./routes/routerU"),
+  routesI = require("./routes/routerI"),
   port = process.env.PORT || 5000,
   app = express();
 
@@ -26,6 +27,6 @@ app
   .use("/", routesView)
   .use("/api/tipoequipos", routesTE)
   .use("/api/estadoequipos", routesEE)
-  .use("/api/usuarios", routesU);
-
+  .use("/api/usuarios", routesU)
+  .use("/api/inventarios", routesI);
 module.exports = app;

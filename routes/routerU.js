@@ -8,6 +8,7 @@ router
   .get("/", controllerU.obtenerUsuarios)
   .get("/", controllerU.obtenerUsuario)
   .post("/", controllerU.ingresarUsuarios)
-  .put("/", controllerU.actualizarUsuario);
+  .put("/", controllerU.actualizarUsuario)
+  .delete("/", controllerU.eliminarUsuario);
 
 module.exports = router;
