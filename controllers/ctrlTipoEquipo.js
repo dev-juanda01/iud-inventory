@@ -1,11 +1,12 @@
 "use strict";
 
-const modeloTipoEquipo = require("../models/tipoEquipo");
+const modeloTipoEquipo = require("../models/tipoEquipo"),
+  { request, response } = require("express");
 
 class CtrlTipoEquipo {
   constructor() {}
 
-  async obtenerTipoEquipo(req, res) {
+  async obtenerTipoEquipo(req = request, res = response) {
     try {
       let nombre = req.query.nombre.toUpperCase();
       const tipoEquipo = await modeloTipoEquipo.find({ nombre });
@@ -44,9 +45,15 @@ class CtrlTipoEquipo {
   async ingresarTipoEquipo(req, res) {
     console.log(req.body);
     try {
+      let nombre = req.body.nombre ? req.body.nombre.toUpperCase() : "",
+        buscarTipo = await modeloTipoEquipo.find({ nombre });
+
+      if (buscarTipo)
+        return res.status(404).send({ message: `El tipo ya existe` });
+
       let nuevoTipoEquipo = new modeloTipoEquipo();
 
-      nuevoTipoEquipo.nombre = req.body.nombre.toUpperCase();
+      nuevoTipoEquipo.nombre = nombre;
       nuevoTipoEquipo.estado = req.body.estado;
 
       nuevoTipoEquipo.save();
@@ -75,22 +82,32 @@ class CtrlTipoEquipo {
       }
 
       return res.status(200).send({ findTipoEquipo });
-    } catch (error) {}
+    } catch (error) {
+      return res
+        .status(500)
+        .send({ message: `Error al conectar a la base de datos ${error}` });
+    }
   }
 
   async eliminarTipoEquipo(req, res) {
-    let idTipoEquipo = await req.query.id,
-      findTipoEquipo = await modeloTipoEquipo.findByIdAndDelete(idTipoEquipo);
+    try {
+      let idTipoEquipo = await req.query.id,
+        findTipoEquipo = await modeloTipoEquipo.findByIdAndDelete(idTipoEquipo);
 
-    if (findTipoEquipo == undefined) {
-      return res.status(404).send({
-        message: `El tipo de equipo con el id ${idTipoEquipo} no existe`,
-      });
+      if (findTipoEquipo == undefined) {
+        return res.status(404).send({
+          message: `El tipo de equipo con el id ${idTipoEquipo} no existe`,
+        });
+      }
+
+      return res
+        .status(200)
+        .send({ message: `el tipo de equipo ha sido eliminado` });
+    } catch (error) {
+      return res
+        .status(500)
+        .send({ message: `Error al conectar a la base de datos ${error}` });
     }
-
-    return res
-      .status(200)
-      .send({ message: `el tipo de equipo ha sido eliminado` });
   }
 }
 
