@@ -9,11 +9,13 @@ const modeloInventario = require("../models/inventarios"),
 class CtrlInventario {
   constructor() {}
 
-  async obtenerInventario(req, res) {
+  async obtenerInventarios(req, res) {
     try {
+      if (req.query.id) return next();
       const inventarios = await modeloInventario.find({});
+      // console.log(inventarios);
 
-      if (!inventarios) {
+      if (inventarios.length == 0) {
         return res
           .status(404)
           .send({ message: `No hay inventarios registrados` });
@@ -26,7 +28,7 @@ class CtrlInventario {
         .send({ message: `Error al consultar en la base de datos ${error}` });
     }
   }
-  async obtenerInventarios(req, res) {
+  async obtenerInventario(req, res, next) {
     try {
       const id = req.query.id,
         inventario = await modeloInventario.findById(id);

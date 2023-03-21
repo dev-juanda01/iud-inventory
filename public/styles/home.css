@@ -1,9 +1,14 @@
 :root {
-  --primary-color: #203f58;
+  --primary-color: #1e3d58;
   --second-color: #ffffff;
+  --yellow-color: #e1b959;
+  --blue-color: #7cb5da;
+  --red-color: #a53d34;
+}
+html {
+  background-color: var(--primary-color);
 }
 body {
-  background-color: var(--primary-color);
   color: var(--second-color);
   font-family: sans-serif;
 }
@@ -11,6 +16,23 @@ header {
   width: 70%;
   margin: auto;
   padding-top: 1.2rem;
+}
+.barra {
+  display: flex;
+}
+.content {
+  display: block;
+  width: 100%;
+  padding: 5px;
+}
+.yellow {
+  background-color: var(--yellow-color);
+}
+.blue {
+  background-color: var(--blue-color);
+}
+.red {
+  background-color: var(--red-color);
 }
 main {
   width: 70%;
@@ -20,4 +42,9 @@ a {
   display: block;
   color: var(--second-color);
   padding: 0.7rem 0;
+}
+.img-content {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
 }

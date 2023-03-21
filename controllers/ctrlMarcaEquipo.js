@@ -107,4 +107,4 @@ class CtrlMarcaEquipo {
   }
 }
 
-module.exports = new CtrlEstadoEquipo();
+module.exports = new CtrlMarcaEquipo();

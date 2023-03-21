@@ -2,11 +2,37 @@ extends layout
 
 block content 
   header
+    .barra 
+      span.yellow.content
+      span.blue.content
+      span.red.content
     h1 IUD-Inventory
   main 
-    p
+    p.description 
+      |API RESTful para almacenar datos de equipos en un inventario. 
+      |Esta API permite a los usuarios enviar, actualizar, eliminar y recuperar datos relacionados 
+      |con los equipos, todo a través de solicitudes HTTP y una interfaz de programación de aplicaciones 
+      |(API) fácil de usar.
+
+      |Con esta API, los usuarios pueden crear un nuevo equipo en el inventario, actualizar 
+      |información de equipos existentes, eliminar equipos del inventario y obtener información 
+      |detallada sobre un equipo específico. Además, la API también proporciona una lista completa 
+      |de todos los equipos en el inventario.
+      br
+      br
+      |La seguridad y privacidad de los datos es importante, por lo que la API RESTful podría requerir 
+      |autenticación y autorización para permitir que solo los usuarios autorizados accedan y modifiquen 
+      |los datos del inventario.
+      |
+      |Si estás interesado en utilizar esta API RESTful para almacenar y gestionar tus datos de equipos, 
+      |este sitio web proporciona una descripción detallada de cómo interactuar con ella. 
+      |¡Espero que disfrutes usando esta API!
     h2 Endpoints 
     .links 
       a(href="/api/tipoequipos") /tipoequipos
-      a(href="/api/usuarios") /usuarios 
-      a(href="") 
+      a(href="/api/estadoequipos") /estadoequipos
+      a(href="/api/marcaequipos") /marcaequipos 
+      a(href="/api/usuarios") /usuarios
+      a(href="/api/inventarios") /inventarios
+    .img-content 
+      img(src="./img/logo-iud-2.png" alt="Logo IUD")
