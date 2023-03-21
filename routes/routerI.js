@@ -7,4 +7,8 @@ const express = require("express"),
 router
   .get("/", controllerI.obtenerInventarios)
   .get("/", controllerI.obtenerInventario)
-  .post("/", controllerI.ingresarInventario);
+  .post("/", controllerI.ingresarInventario)
+  .put("/", controllerI.actualizarInventario)
+  .delete("/", controllerI.eliminarInventario);
+
+module.exports = router;

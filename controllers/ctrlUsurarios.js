@@ -85,16 +85,22 @@ class CtrlUsuario {
   }
 
   async eliminarUsuario(req, res) {
-    let id = req.query.id;
+    try {
+      let id = req.query.id;
 
-    const usuario = await modeloUsuarios.findByIdAndDelete(id);
+      const usuario = await modeloUsuarios.findByIdAndDelete(id);
 
-    if (!usuario)
+      if (!usuario)
+        return res
+          .status(404)
+          .send({ message: `Usuario con id ${id} no existe` });
+
+      res.status(200).send({ message: `Usuario eliminado` });
+    } catch (error) {
       return res
-        .status(404)
-        .send({ message: `Usuario con id ${id} no existe` });
-
-    res.status(200).send({ message: `Usuario eliminado` });
+        .status(500)
+        .send({ message: `Error al conectar a la base de datos ${error}` });
+    }
   }
 }
 

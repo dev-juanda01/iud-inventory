@@ -2,7 +2,7 @@
 
 const modeloInventario = require("../models/inventarios"),
   modeloUsuarios = require("../models/usuarios"),
-  modeloMarcas = require("../models/marca"),
+  modeloMarcas = require("../models/marcaEquipo"),
   modeloEstados = require("../models/estadoEquipo"),
   modeloTipos = require("../models/tipoEquipo");
 
@@ -63,8 +63,43 @@ class CtrlInventario {
         .send({ message: `Error al consultar en la base de datos ${error}` });
     }
   }
-  async actualizarInventario() {}
-  async eliminarInventario() {}
+  async actualizarInventario(req, res) {
+    try {
+      let id = req.query.id,
+        data = req.body;
+
+      const inventario = await modeloInventario.findByIdAndUpdate(id, data);
+
+      if (!inventario)
+        return res
+          .status(404)
+          .send({ message: `No existe un inventario con id ${id}` });
+
+      res.status(200).send(inventario);
+    } catch (error) {
+      res
+        .status(500)
+        .send({ message: `Error al consultar en la base de datos ${error}` });
+    }
+  }
+  async eliminarInventario(req, res) {
+    try {
+      let id = req.query.id;
+
+      const eliminado = await modeloInventario.findByIdAndDelete(id);
+
+      if (!eliminado)
+        return res
+          .status(404)
+          .send({ message: `No existe un inventario con id ${id}` });
+
+      res.status(200).send({ message: `Inventario eliminado exitosamente` });
+    } catch (error) {
+      res.status(500).send({
+        message: `Error al consultar en la base de datos ${error}`,
+      });
+    }
+  }
 
   async validarInventario(campo, nombre, modelo, res) {
     const modeloBusqueda = await modelo.findOne({

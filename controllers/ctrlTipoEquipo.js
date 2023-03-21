@@ -82,22 +82,32 @@ class CtrlTipoEquipo {
       }
 
       return res.status(200).send({ findTipoEquipo });
-    } catch (error) {}
+    } catch (error) {
+      return res
+        .status(500)
+        .send({ message: `Error al conectar a la base de datos ${error}` });
+    }
   }
 
   async eliminarTipoEquipo(req, res) {
-    let idTipoEquipo = await req.query.id,
-      findTipoEquipo = await modeloTipoEquipo.findByIdAndDelete(idTipoEquipo);
+    try {
+      let idTipoEquipo = await req.query.id,
+        findTipoEquipo = await modeloTipoEquipo.findByIdAndDelete(idTipoEquipo);
 
-    if (findTipoEquipo == undefined) {
-      return res.status(404).send({
-        message: `El tipo de equipo con el id ${idTipoEquipo} no existe`,
-      });
+      if (findTipoEquipo == undefined) {
+        return res.status(404).send({
+          message: `El tipo de equipo con el id ${idTipoEquipo} no existe`,
+        });
+      }
+
+      return res
+        .status(200)
+        .send({ message: `el tipo de equipo ha sido eliminado` });
+    } catch (error) {
+      return res
+        .status(500)
+        .send({ message: `Error al conectar a la base de datos ${error}` });
     }
-
-    return res
-      .status(200)
-      .send({ message: `el tipo de equipo ha sido eliminado` });
   }
 }
 
