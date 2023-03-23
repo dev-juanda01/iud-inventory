@@ -75,6 +75,8 @@ class CtrlEstadoEquipo {
         dataEstadoEquipo = req.body;
 
       dataEstadoEquipo.fechaActualizacion = new Date();
+      dataEstadoEquipo.nombre = req.body.nombre.toUpperCase();
+      console.log(dataEstadoEquipo.nombre);
 
       const findEstadoEquipo = await modeloEstadoEquipo.findByIdAndUpdate(
         idEstadoEquipo,
@@ -82,7 +84,7 @@ class CtrlEstadoEquipo {
         { new: true }
       );
 
-      if (findEstadoEquipo == undefined) {
+      if (!findEstadoEquipo) {
         return res.status(404).send({
           message: `El Estado de equipo con el id ${idEstadoEquipo} no existe`,
         });
