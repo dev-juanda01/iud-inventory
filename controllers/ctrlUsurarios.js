@@ -67,6 +67,8 @@ class CtrlUsuario {
       let id = await req.query.id,
         data = req.body;
 
+      data.fechaActualizacion = new Date();
+
       const usuario = await modeloUsuarios.findByIdAndUpdate(id, data, {
         new: true,
       });

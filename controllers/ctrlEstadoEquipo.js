@@ -1,6 +1,5 @@
 "use strict";
 
-const estadoEquipo = require("../models/estadoEquipo");
 const modeloEstadoEquipo = require("../models/estadoEquipo");
 
 class CtrlEstadoEquipo {
@@ -69,15 +68,19 @@ class CtrlEstadoEquipo {
         .send({ message: "error al conectar la base de datos " });
     }
   }
+
   async actualizarEstadoEquipo(req, res) {
     try {
       let idEstadoEquipo = req.query.id,
-        dataEstadoEquipo = req.body,
-        findEstadoEquipo = await modeloEstadoEquipo.findByIdAndUpdate(
-          idEstadoEquipo,
-          dataEstadoEquipo,
-          { new: true }
-        );
+        dataEstadoEquipo = req.body;
+
+      dataEstadoEquipo.fechaActualizacion = new Date();
+
+      const findEstadoEquipo = await modeloEstadoEquipo.findByIdAndUpdate(
+        idEstadoEquipo,
+        dataEstadoEquipo,
+        { new: true }
+      );
 
       if (findEstadoEquipo == undefined) {
         return res.status(404).send({
@@ -86,24 +89,34 @@ class CtrlEstadoEquipo {
       }
 
       return res.status(200).send({ findEstadoEquipo });
-    } catch (error) {}
+    } catch (error) {
+      return res
+        .status(500)
+        .send({ message: "error al conectar la base de datos " });
+    }
   }
 
   async eliminarEstadoEquipo(req, res) {
-    let idEstadoEquipo = await req.query.id,
-      findEstadoEquipo = await modeloEstadoEquipo.findByIdAndDelete(
-        idEstadoEquipo
-      );
+    try {
+      let idEstadoEquipo = await req.query.id,
+        findEstadoEquipo = await modeloEstadoEquipo.findByIdAndDelete(
+          idEstadoEquipo
+        );
 
-    if (findEstadoEquipo == undefined) {
-      return res.status(404).send({
-        message: `El estado de equipo con el id ${idEstadoEquipo} no existe`,
-      });
+      if (findEstadoEquipo == undefined) {
+        return res.status(404).send({
+          message: `El estado de equipo con el id ${idEstadoEquipo} no existe`,
+        });
+      }
+
+      return res
+        .status(200)
+        .send({ message: `el Estado de equipo ha sido eliminado` });
+    } catch (error) {
+      return res
+        .status(500)
+        .send({ message: "error al conectar la base de datos " });
     }
-
-    return res
-      .status(200)
-      .send({ message: `el Estado de equipo ha sido eliminado` });
   }
 }
 

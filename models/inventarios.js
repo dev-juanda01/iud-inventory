@@ -43,16 +43,16 @@ const mongoose = require("mongoose"),
       ref: "marca",
       required: true,
     },
-    estadoEquipo: {
+    estado: {
       type: Schema.Types.ObjectId,
       ref: "estadoEquipo",
       required: true,
     },
-    tipoEquipo: {
+    tipo: {
       type: Schema.Types.ObjectId,
       ref: "tipoEquipos",
       required: true,
     },
   });
 
-  module.exports = mongoose.model('inventario', inventario)
+module.exports = mongoose.model("inventario", inventario);

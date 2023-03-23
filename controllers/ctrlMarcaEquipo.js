@@ -70,8 +70,13 @@ class CtrlMarcaEquipo {
   async actualizarMarcaEquipo(req, res) {
     try {
       let id = req.query.id,
-        data = req.body,
-        marca = await modeloMarca.findByIdAndUpdate(id, data, { new: true });
+        data = req.body;
+
+      data.fechaActualizacion = new Date();
+
+      const marca = await modeloMarca.findByIdAndUpdate(id, data, {
+        new: true,
+      });
 
       if (!marca) {
         return res.status(404).send({
@@ -90,11 +95,11 @@ class CtrlMarcaEquipo {
   async eliminarMarcaEquipo(req, res) {
     try {
       let id = await req.query.id,
-        marca = await modeloTipoEquipo.findByIdAndDelete(id);
+        marca = await modeloMarca.findByIdAndDelete(id);
 
-      if (marca) {
+      if (!marca) {
         return res.status(404).send({
-          message: `El tipo de equipo con el id ${id} no existe`,
+          message: `la marca con el id ${id} no existe`,
         });
       }
 
@@ -102,7 +107,7 @@ class CtrlMarcaEquipo {
     } catch (error) {
       return res
         .status(500)
-        .send({ message: `Error al conectar a la base de datos ${error}` });
+        .send({ message: `Error procesar la petición ${error}` });
     }
   }
 }

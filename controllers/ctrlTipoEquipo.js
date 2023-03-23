@@ -68,12 +68,15 @@ class CtrlTipoEquipo {
   async actualizarTipoEquipo(req, res) {
     try {
       let idTipoEquipo = req.query.id,
-        dataTipoEquipo = req.body,
-        findTipoEquipo = await modeloTipoEquipo.findByIdAndUpdate(
-          idTipoEquipo,
-          dataTipoEquipo,
-          { new: true }
-        );
+        dataTipoEquipo = req.body;
+
+      dataTipoEquipo.fechaActualizacion = new Date();
+
+      const findTipoEquipo = await modeloTipoEquipo.findByIdAndUpdate(
+        idTipoEquipo,
+        dataTipoEquipo,
+        { new: true }
+      );
 
       if (findTipoEquipo == undefined) {
         return res.status(404).send({

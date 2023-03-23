@@ -6,10 +6,24 @@ const modeloInventario = require("../models/inventarios"),
   modeloEstados = require("../models/estadoEquipo"),
   modeloTipos = require("../models/tipoEquipo");
 
+async function validarInventario(campo, nombre, modelo, res) {
+  // console.log(campo, nombre, modelo, res);
+  const modeloBusqueda = await modelo.findOne({
+    _id: campo,
+    estado: true,
+  });
+
+  if (!modeloBusqueda) {
+    res.status(404).send({ message: `${nombre} invalido` });
+    return false;
+  }
+
+  return true;
+}
+
 class CtrlInventario {
   constructor() {}
-
-  async obtenerInventarios(req, res) {
+  async obtenerInventarios(req, res, next) {
     try {
       if (req.query.id) return next();
       const inventarios = await modeloInventario.find({});
@@ -28,7 +42,7 @@ class CtrlInventario {
         .send({ message: `Error al consultar en la base de datos ${error}` });
     }
   }
-  async obtenerInventario(req, res, next) {
+  async obtenerInventario(req, res) {
     try {
       const id = req.query.id,
         inventario = await modeloInventario.findById(id);
@@ -51,10 +65,14 @@ class CtrlInventario {
       let data = await req.body,
         { usuario, marca, estado, tipo } = req.body;
 
-      await this.validarInventario(usuario, "usuario", modeloUsuarios, res);
-      await this.validarInventario(marca, "marca", modeloMarcas, res);
-      await this.validarInventario(estado, "estado", modeloEstados, res);
-      await this.validarInventario(tipo, "tipo", modeloTipos, res);
+      console.log(req.body, usuario);
+
+      if (!(await validarInventario(usuario, "usuario", modeloUsuarios, res)))
+        return;
+      if (!(await validarInventario(marca, "marca", modeloMarcas, res))) return;
+      if (!(await validarInventario(estado, "estado", modeloEstados, res)))
+        return;
+      if (!(await validarInventario(tipo, "tipo", modeloTipos, res))) return;
 
       const nuevoInventario = new modeloInventario(data);
       nuevoInventario.save();
@@ -69,6 +87,8 @@ class CtrlInventario {
     try {
       let id = req.query.id,
         data = req.body;
+
+      data.fechaActualizacion = new Date();
 
       const inventario = await modeloInventario.findByIdAndUpdate(id, data);
 
@@ -100,17 +120,6 @@ class CtrlInventario {
       res.status(500).send({
         message: `Error al consultar en la base de datos ${error}`,
       });
-    }
-  }
-
-  async validarInventario(campo, nombre, modelo, res) {
-    const modeloBusqueda = await modelo.findOne({
-      _id: campo.id,
-      estado: true,
-    });
-
-    if (!modeloBusqueda) {
-      return res.status(404).send({ message: `${nombre} invalido` });
     }
   }
 }

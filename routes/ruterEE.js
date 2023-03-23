@@ -7,6 +7,8 @@ const express = require("express"),
 router
   .get("/", controllerEE.obtenerEstadoEquipos)
   .get("/", controllerEE.obtenerEstadoEquipo)
-  .post("/", controllerEE.ingresarEstadoEquipo);
+  .post("/", controllerEE.ingresarEstadoEquipo)
+  .put("/", controllerEE.actualizarEstadoEquipo)
+  .delete("/", controllerEE.eliminarEstadoEquipo);
 
 module.exports = router;
