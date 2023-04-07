@@ -6,6 +6,7 @@ const express = require("express"),
   favicon = require("serve-favicon"),
   bodyParser = require("body-parser"),
   dotenv = require("dotenv").config(),
+  cors = require("cors"),
   faviconURL = `${__dirname}/public/img/logo-iud.png`,
   publicDir = express.static(`${__dirname}/public`),
   viewDir = `${__dirname}/views`,
@@ -25,6 +26,11 @@ app
   .use(publicDir)
   .use(bodyParser.urlencoded({ extended: false }))
   .use(bodyParser.json())
+  .use(
+    cors({
+      origin: "*",
+    })
+  )
   .use("/", routesView)
   .use("/api/tipoequipos", routesTE)
   .use("/api/estadoequipos", routesEE)

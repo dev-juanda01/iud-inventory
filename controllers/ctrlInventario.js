@@ -90,7 +90,9 @@ class CtrlInventario {
 
       data.fechaActualizacion = new Date();
 
-      const inventario = await modeloInventario.findByIdAndUpdate(id, data);
+      const inventario = await modeloInventario.findByIdAndUpdate(id, data, {
+        new: true,
+      });
 
       if (!inventario)
         return res
