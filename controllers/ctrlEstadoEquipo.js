@@ -46,7 +46,7 @@ class CtrlEstadoEquipo {
           .send({ message: `No se ecuentran estados de equipos` });
       }
 
-      return res.status(200).send({ estadoEquipo });
+      return res.status(200).send(estadoEquipo);
     } catch (error) {
       return res.status(500).send({ message: `Error al consultar ${error}` });
     }
