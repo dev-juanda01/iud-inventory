@@ -35,7 +35,7 @@ class CtrlTipoEquipo {
           .send({ message: `No se ecuentran tipos de equipos` });
 
       console.log("Ejecute todos");
-      res.status(200).send({ tipoEquipos });
+      res.status(200).send(tipoEquipos);
     } catch (error) {
       return res
         .status(500)
@@ -46,10 +46,11 @@ class CtrlTipoEquipo {
     console.log(req.body);
     try {
       let nombre = req.body.nombre ? req.body.nombre.toUpperCase() : "",
-        buscarTipo = await modeloTipoEquipo.find({ nombre });
+        buscarTipo = await modeloTipoEquipo.findOne({ nombre });
+      console.log(buscarTipo);
 
       if (buscarTipo)
-        return res.status(404).send({ message: `El tipo ya existe` });
+        return res.status(409).send({ message: `El tipo ya existe` });
 
       let nuevoTipoEquipo = new modeloTipoEquipo();
 
