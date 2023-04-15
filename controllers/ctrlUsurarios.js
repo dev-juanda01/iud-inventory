@@ -7,7 +7,7 @@ class CtrlUsuario {
 
   async obtenerUsuarios(req, res, next) {
     try {
-      if (req.query.id) return next();
+      if (req.query.nombre) return next();
 
       const usuarios = await modeloUsuarios.find({});
 
@@ -26,12 +26,12 @@ class CtrlUsuario {
 
   async obtenerUsuario(req, res) {
     try {
-      let id = await req.query.id;
+      let nombre = await req.query.nombre;
 
-      const usuario = modeloUsuarios.findById(id);
+      const usuario = await modeloUsuarios.find({ nombre });
       console.log(usuario);
 
-      if (usuario)
+      if (!usuario)
         return res
           .status(404)
           .send({ message: `Usuario no registrado en la base de datos` });

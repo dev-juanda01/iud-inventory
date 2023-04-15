@@ -25,7 +25,7 @@ class CtrlInventario {
   constructor() {}
   async obtenerInventarios(req, res, next) {
     try {
-      if (req.query.id) return next();
+      if (req.query.serial) return next();
       const inventarios = await modeloInventario.find({});
       // console.log(inventarios);
 
@@ -44,13 +44,13 @@ class CtrlInventario {
   }
   async obtenerInventario(req, res) {
     try {
-      const id = req.query.id,
-        inventario = await modeloInventario.findById(id);
+      const serial = req.query.serial,
+        inventario = await modeloInventario.findOne({ serial });
 
       if (!inventario) {
-        res
+        return res
           .status(404)
-          .send({ message: `No existe el inventario con id ${id}` });
+          .send({ message: `No existe el inventario con el serial ${serial}` });
       }
 
       res.status(200).send(inventario);
@@ -88,7 +88,7 @@ class CtrlInventario {
       let id = req.query.id,
         data = req.body;
 
-      data.fechaActualizacion = new Date();
+      // data.fechaActualizacion = new Date();
 
       const inventario = await modeloInventario.findByIdAndUpdate(id, data, {
         new: true,

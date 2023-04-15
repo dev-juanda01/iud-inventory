@@ -12,10 +12,8 @@ class CtrlTipoEquipo {
       const tipoEquipo = await modeloTipoEquipo.find({ nombre });
 
       if (tipoEquipo.length == 0) {
-        return res.status(404).send({ message: `tipo no encontrado` });
+        return res.status(404).send({ message: `Tipo ${nombre} no encontrado` });
       }
-
-      console.log("Ejecute uno");
       return res.status(200).send(tipoEquipo);
     } catch (error) {
       return res.status(500).send({});

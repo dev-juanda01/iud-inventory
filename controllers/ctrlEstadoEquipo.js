@@ -16,16 +16,16 @@ class CtrlEstadoEquipo {
           .send({ message: `Error en el nombre de la llave` });
 
       let nombre = await req.query.nombre.toUpperCase();
-      const estadoEqipo = await modeloEstadoEquipo.find({ nombre });
+      const estadoEquipo = await modeloEstadoEquipo.find({ nombre });
 
-      console.log(nombre, estadoEqipo);
+      console.log(nombre, estadoEquipo);
 
-      if (estadoEqipo.length == 0)
+      if (estadoEquipo.length == 0)
         return res
           .status(404)
           .send({ message: `El estado ${nombre} no es una opción admitida` });
 
-      res.status(200).send(estadoEqipo);
+      res.status(200).send(estadoEquipo);
     } catch (error) {
       return res
         .status(500)
