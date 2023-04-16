@@ -112,8 +112,8 @@ class CtrlEstadoEquipo {
       }
 
       return res
-        .status(200)
-        .send({ message: `el Estado de equipo ha sido eliminado` });
+        .status(204)
+        .send({ message: `El estado de equipo ha sido eliminado` });
     } catch (error) {
       return res
         .status(500)

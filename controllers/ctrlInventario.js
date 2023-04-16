@@ -117,7 +117,7 @@ class CtrlInventario {
           .status(404)
           .send({ message: `No existe un inventario con id ${id}` });
 
-      res.status(200).send({ message: `Inventario eliminado exitosamente` });
+      res.status(204).send({ message: `Inventario eliminado exitosamente` });
     } catch (error) {
       res.status(500).send({
         message: `Error al consultar en la base de datos ${error}`,

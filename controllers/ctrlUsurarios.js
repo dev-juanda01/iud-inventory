@@ -97,7 +97,7 @@ class CtrlUsuario {
           .status(404)
           .send({ message: `Usuario con id ${id} no existe` });
 
-      res.status(200).send({ message: `Usuario eliminado` });
+      res.status(204).send({ message: `Usuario eliminado` });
     } catch (error) {
       return res
         .status(500)

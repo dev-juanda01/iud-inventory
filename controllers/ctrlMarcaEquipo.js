@@ -103,7 +103,7 @@ class CtrlMarcaEquipo {
         });
       }
 
-      return res.status(200).send({ message: `la marca ha sido eliminada` });
+      return res.status(204).send({ message: `la marca ha sido eliminada` });
     } catch (error) {
       return res
         .status(500)

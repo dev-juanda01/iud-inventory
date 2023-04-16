@@ -103,8 +103,8 @@ class CtrlTipoEquipo {
       }
 
       return res
-        .status(200)
-        .send({ message: `el tipo de equipo ha sido eliminado` });
+        .status(204)
+        .send({ message: `El tipo de equipo ha sido eliminado` });
     } catch (error) {
       return res
         .status(500)
