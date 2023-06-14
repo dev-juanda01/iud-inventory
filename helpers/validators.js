@@ -8,6 +8,19 @@ const correoExiste = async (correo = "") => {
   }
 };
 
+
 module.exports = {
-  correoExiste,
+  correoExiste
 };
+
+
+
+
+//TODO: Validar si el id por usuario existe para implementarlo en el post
+//de actualizar y eliminar usuarios con los metodos: 
+// const idExiste
+// const rolExiste
+
+// TODO: validar el jwt.
+
+

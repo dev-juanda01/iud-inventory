@@ -11,7 +11,7 @@ const {
   obtenerUsuarios,
   eliminarUsuario,
   actualizarUsuario,
-} = require("../controllers/ctrlUsurarios");
+} = require("../controllers/ctrlUsuarios");
 
 router
   .get("/", obtenerUsuarios)
@@ -29,8 +29,11 @@ router
     ],
     ingresarUsuarios
   )
+
   // TODO: Validar datos de la actualización y eliminación
+  
   .put("/:id", [check("id")], actualizarUsuario)
+  
   .delete("/", eliminarUsuario);
 
 module.exports = router;
