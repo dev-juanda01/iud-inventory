@@ -1,6 +1,7 @@
 "use strict";
 
 const modeloUsuarios = require("../models/usuarios");
+const {validationResult} = require("express-validator")
 
 class CtrlUsuario {
   constructor() {}
@@ -43,12 +44,20 @@ class CtrlUsuario {
     }
   }
 
-  async ingresarUsuarios(req, res) {
+  async ingresarUsuarios(req, res) { 
     try {
-      const { nombre, email, estado } = req.body,
+      const errors = validationResult(req);
+
+      if(!errors.isEmpty()){
+        return res.status(400).json({ mensaje: errors.array()});
+      }
+
+      const { nombre, email, contrasena, rol, estado } = req.body,
         data = {
           nombre,
           email,
+          contrasena,
+          rol,
           estado,
         };
 

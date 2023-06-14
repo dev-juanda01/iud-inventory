@@ -23,6 +23,15 @@ const mongoose = require("mongoose"),
         message: `No es un correo valido`,
       },
     },
+    contrasena: {
+      type: String,
+      required: true,
+    },
+    rol: {
+      type: String,
+      required: true,
+      enum: [ 'ADMIN', 'DOCENTE'],
+    },
     estado: {
       type: Boolean,
       required: true,
