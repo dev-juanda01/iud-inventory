@@ -30,7 +30,7 @@ const mongoose = require("mongoose"),
     rol: {
       type: String,
       required: true,
-      enum: [ 'ADMIN', 'DOCENTE'],
+      enum: ["ADMIN", "DOCENTE"],
     },
     estado: {
       type: Boolean,
@@ -45,5 +45,10 @@ const mongoose = require("mongoose"),
       default: new Date(),
     },
   });
+
+usuarios.methods.toJSON = function () {
+  const { __v, contrasena, ...usuario } = this.toObject();
+  return usuario;
+};
 
 module.exports = mongoose.model("usuarios", usuarios);

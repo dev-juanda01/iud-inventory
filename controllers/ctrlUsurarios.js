@@ -1,7 +1,8 @@
 "use strict";
 
 const modeloUsuarios = require("../models/usuarios");
-const {validationResult} = require("express-validator")
+const bcrypjs = require("bcryptjs");
+// const {validationResult} = require("express-validator")
 
 class CtrlUsuario {
   constructor() {}
@@ -44,27 +45,24 @@ class CtrlUsuario {
     }
   }
 
-  async ingresarUsuarios(req, res) { 
+  async ingresarUsuarios(req, res) {
     try {
-      const errors = validationResult(req);
+      const { nombre, email, contrasena, rol, estado } = req.body;
+      const nuevoUsuario = new modeloUsuarios({
+        nombre,
+        email,
+        contrasena,
+        rol,
+        estado,
+      });
 
-      if(!errors.isEmpty()){
-        return res.status(400).json({ mensaje: errors.array()});
-      }
+      const salt = bcrypjs.genSaltSync();
+      nuevoUsuario.contrasena = bcrypjs.hashSync(contrasena, salt);
 
-      const { nombre, email, contrasena, rol, estado } = req.body,
-        data = {
-          nombre,
-          email,
-          contrasena,
-          rol,
-          estado,
-        };
-
-      let nuevoUsuario = new modeloUsuarios(data);
       nuevoUsuario.save();
       return res.status(201).send(nuevoUsuario);
     } catch (error) {
+      console.log(error);
       return res
         .status(500)
         .send({ message: `Error al consutar en la base de datos ${error}` });
