@@ -1,7 +1,7 @@
 "use strict";
 
 const { validationResult, check } = require("express-validator");
-const { correoExiste,idExiste} = require("../helpers/validators");
+const { correoExiste, idExiste } = require("../helpers/validators");
 const { validarCampos } = require("../middlewares/validar_campos");
 const express = require("express");
 
@@ -20,6 +20,7 @@ router
   .post(
     "/",
     [
+      // validarJWT
       check("nombre", "Nombre obligatorio - Ingreselo").notEmpty(),
       check("email", "Correo no valido - No es un correo").isEmail(),
       check("email").custom(correoExiste),
@@ -30,11 +31,16 @@ router
     ],
     ingresarUsuarios
   )
-
   // TODO: Validar datos de la actualización y eliminación
-  
-  .put("/:id", [check("id").custom(idExiste), validarCampos], actualizarUsuario)
-  
+  .put(
+    "/:id",
+    [
+      check("id", "Id invalido - No es un id de mongo").isMongoId(),
+      check("id").custom(idExiste),
+      validarCampos,
+    ],
+    actualizarUsuario
+  )
   .delete("/", [check("id").custom(idExiste), validarCampos], eliminarUsuario);
 
 module.exports = router;

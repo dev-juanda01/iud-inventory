@@ -2,7 +2,6 @@
 
 const modeloUsuarios = require("../models/usuarios");
 const bcrypjs = require("bcryptjs");
-// const {validationResult} = require("express-validator")
 
 class CtrlUsuario {
   constructor() {}
@@ -71,8 +70,8 @@ class CtrlUsuario {
 
   async actualizarUsuario(req, res) {
     try {
-      let id = await req.query.id,
-        data = req.body;
+      const { id } = await req.params
+      const data = req.body;
 
       data.fechaActualizacion = new Date();
 
