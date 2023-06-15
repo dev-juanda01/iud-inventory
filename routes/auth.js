@@ -1,24 +1,18 @@
 
-
+const { validationResult, check } = require("express-validator");
+const { correoExiste,idExiste} = require("../helpers/validators");
+const { validarCampos } = require("../middlewares/validar_campos");
+const express = require("express");
+const router = express.Router();
 
 router.post('/', [
-   check('email', 'email.requerido')
+    check("email", "Correo no valido - No es un correo").isEmail(),
+    check("email").custom(correoExiste),
+    check("contrasena","email", "Contraseña no valida - Ingresela").not().isEmpty(),
+    validarCampos
 ], async function(req, res){
 
     try{
-
-        const errors = validationResult(req);
-
-        if(!errors.isEmpty()){
-            return res.status(400).json({ mensaje: errors.array()});
-        }
-
-        
-        const usuario = await Usuario.findOne({ email: req.body.email });
-
-        if(!usuario) {
-            return res.status(400).json({ mensaje: 'User not found'});
-        }
 
         const esIgual = bycript.compareSync(req.body.contrasena, usuario.contrasena);
         if(!esIgual){

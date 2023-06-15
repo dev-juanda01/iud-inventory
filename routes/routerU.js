@@ -1,9 +1,10 @@
 "use strict";
 
 const { validationResult, check } = require("express-validator");
-const { correoExiste } = require("../helpers/validators");
+const { correoExiste,idExiste} = require("../helpers/validators");
 const { validarCampos } = require("../middlewares/validar_campos");
 const express = require("express");
+
 const router = express.Router();
 const {
   ingresarUsuarios,
@@ -32,8 +33,8 @@ router
 
   // TODO: Validar datos de la actualización y eliminación
   
-  .put("/:id", [check("id")], actualizarUsuario)
+  .put("/:id", [check("id").custom(idExiste), validarCampos], actualizarUsuario)
   
-  .delete("/", eliminarUsuario);
+  .delete("/", [check("id").custom(idExiste), validarCampos], eliminarUsuario);
 
 module.exports = router;
