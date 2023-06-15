@@ -74,7 +74,13 @@ class CtrlUsuario {
       const data = req.body;
 
       data.fechaActualizacion = new Date();
-
+      
+      
+      if (data.contrasena !=  undefined){
+        const salt = bcrypjs.genSaltSync();
+        data.contrasena = bcrypjs.hashSync(data.contrasena, salt);
+      }
+        
       const usuario = await modeloUsuarios.findByIdAndUpdate(id, data, {
         new: true,
       });

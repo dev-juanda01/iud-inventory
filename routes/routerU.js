@@ -3,6 +3,8 @@
 const { validationResult, check } = require("express-validator");
 const { correoExiste, idExiste } = require("../helpers/validators");
 const { validarCampos } = require("../middlewares/validar_campos");
+const { validarJWT } = require("../middlewares/validar_jwt");
+const { validarRolAdmin } = require("../middlewares/validar_rol_admin");
 const express = require("express");
 
 const router = express.Router();
@@ -12,10 +14,10 @@ const {
   obtenerUsuarios,
   eliminarUsuario,
   actualizarUsuario,
-} = require("../controllers/ctrlUsuarios");
+} = require("../controllers/ctrlUsuario");
 
 router
-  .get("/", obtenerUsuarios)
+  .get("/", [validarJWT], obtenerUsuarios)
   .get("/", obtenerUsuario)
   .post(
     "/",
@@ -28,6 +30,8 @@ router
       check("rol", "Rol no valido - No es admitido").isIn(["ADMIN", "DOCENTE"]),
       check("estado", "El estado es invalido - No es booleano").isBoolean(),
       validarCampos,
+      validarJWT,
+      validarRolAdmin
     ],
     ingresarUsuarios
   )

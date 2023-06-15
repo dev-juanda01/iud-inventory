@@ -8,7 +8,7 @@ router.post(
   "/",
   [
     check("email", "Correo no valido - No es un correo").isEmail(),
-    check("contrasena", "email", "Contraseña no valida - Ingresela").notEmpty(),
+    check("contrasena", "Contraseña no valida - Ingresela").notEmpty(),
     validarCampos,
   ],
   ctrlAuth

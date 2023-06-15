@@ -1,5 +1,6 @@
 const bcryptjs = require("bcryptjs");
 const Usuario = require("../models/usuarios");
+const { generarJWT } = require("../helpers/generar_jwt");
 
 const ctrlAuth = async (req, res) => {
   const { email, contrasena } = req.body;
@@ -33,9 +34,11 @@ const ctrlAuth = async (req, res) => {
     // TODO: generar JWT - TOKEN
     // ......
 
+    const token = generarJWT(usuario);
+
     return res.status(200).send({
       msg: "Usuario - Autenticado",
-      usuario: usuario,
+      usuario: usuario, access_token: token
     });
   } catch (error) {
     console.log(error);

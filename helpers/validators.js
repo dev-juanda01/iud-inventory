@@ -17,26 +17,21 @@ const idExiste = async (id = "") => {
   }
 };
 
-const contrasenaExiste = async (contrasena = "") => {
-  //TODO: pasarle el correo del usuario a comparar
+// const contrasenaExiste = async (contrasena = "") => {
 
-  const contrasenaEsIgual = bycript.compareSync(contrasena, Usuario.contrasena);
+//   const { email, contrasena } = req.body;
 
-  if (!contrasenaEsIgual) {
-    throw new Error(
-      `La contraseña ${contrasena} no existe en la base de datos`
-    );
-  }
-};
+//   const contrasenaEsIgual = bycript.compareSync(contrasena, ...);
+
+//   if (!contrasenaEsIgual) {
+//     throw new Error(
+//       `La contraseña ${contrasena} no existe en la base de datos`
+//     );
+//   }
+// };
 
 module.exports = {
   correoExiste,
   idExiste,
 };
 
-//TODO: Validar si el id por usuario existe para implementarlo en el post
-//de actualizar y eliminar usuarios con los metodos:
-// const idExiste
-// const rolExiste
-
-// TODO: validar el jwt.
