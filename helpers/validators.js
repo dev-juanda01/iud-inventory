@@ -13,7 +13,6 @@ const correoExiste = async (correo = "") => {
   }
 };
 
-
 const usuarioExiste = async (id = "") => {
   const existeUsuario = await Usuario.findById(id);
 
@@ -26,7 +25,9 @@ const estadoEquipoExiste = async (id = "") => {
   const existeEstadoEquipo = await EstadoEquipo.findById(id);
 
   if (!existeEstadoEquipo) {
-    throw new Error(`El id del estado equipo ${id} no existe en la base de datos`);
+    throw new Error(
+      `El id del estado equipo ${id} no existe en la base de datos`
+    );
   }
 };
 
@@ -34,7 +35,9 @@ const marcaEquipoExiste = async (id = "") => {
   const existeMarcaEquipo = await MarcaEquipo.findById(id);
 
   if (!existeMarcaEquipo) {
-    throw new Error(`El id del la marca de equipo ${id} no existe en la base de datos`);
+    throw new Error(
+      `El id del la marca de equipo ${id} no existe en la base de datos`
+    );
   }
 };
 
@@ -42,7 +45,9 @@ const tipoEquipoExiste = async (id = "") => {
   const existeTipoEquipo = await TipoEquipo.findById(id);
 
   if (!existeTipoEquipo) {
-    throw new Error(`El id del tipo de equipo ${id} no existe en la base de datos`);
+    throw new Error(
+      `El id del tipo de equipo ${id} no existe en la base de datos`
+    );
   }
 };
 
@@ -53,11 +58,6 @@ const inventarioExiste = async (id = "") => {
     throw new Error(`El id del inventario ${id} no existe en la base de datos`);
   }
 };
-
-
-
-
-
 
 // const contrasenaExiste = async (contrasena = "") => {
 
@@ -77,7 +77,6 @@ module.exports = {
   usuarioExiste,
   estadoEquipoExiste,
   marcaEquipoExiste,
-  tipoEquipoExiste
-  inventarioExiste
+  tipoEquipoExiste,
+  inventarioExiste,
 };
-

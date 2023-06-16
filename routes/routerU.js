@@ -17,7 +17,7 @@ const {
 } = require("../controllers/ctrlUsuario");
 
 router
-  .get("/", [validarJWT ], obtenerUsuarios)
+  .get("/", [validarJWT], obtenerUsuarios)
   .get("/", [validarJWT], obtenerUsuario)
   .post(
     "/",
@@ -30,7 +30,7 @@ router
       check("estado", "El estado es invalido - No es booleano").isBoolean(),
       validarCampos,
       validarJWT,
-      validarRolAdmin
+      validarRolAdmin,
     ],
     ingresarUsuarios
   )
@@ -38,21 +38,23 @@ router
     "/:id",
     [
       check("id", "Id invalido - No es un id de mongo").isMongoId(),
-      check("id").custom(idExiste),
+      check("id").custom(usuarioExiste),
       validarCampos,
       validarJWT,
-      validarRolAdmin
+      validarRolAdmin,
     ],
     actualizarUsuario
   )
-  .delete("/:id", 
-  [
-    check("id", "Id invalido - No es un id de mongo").isMongoId(),
-    check("id").custom(usuarioExiste), 
-    validarCampos,
-    validarJWT,
-    validarRolAdmin
-  ],  
-  eliminarUsuario);
+  .delete(
+    "/:id",
+    [
+      check("id", "Id invalido - No es un id de mongo").isMongoId(),
+      check("id").custom(usuarioExiste),
+      validarCampos,
+      validarJWT,
+      validarRolAdmin,
+    ],
+    eliminarUsuario
+  );
 
 module.exports = router;

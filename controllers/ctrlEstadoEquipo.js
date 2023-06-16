@@ -18,8 +18,6 @@ class CtrlEstadoEquipo {
       let nombre = await req.query.nombre.toUpperCase();
       const estadoEquipo = await modeloEstadoEquipo.find({ nombre });
 
-      console.log(nombre, estadoEquipo);
-
       if (estadoEquipo.length == 0)
         return res
           .status(404)

@@ -12,7 +12,9 @@ class CtrlTipoEquipo {
       const tipoEquipo = await modeloTipoEquipo.find({ nombre });
 
       if (tipoEquipo.length == 0) {
-        return res.status(404).send({ message: `Tipo ${nombre} no encontrado` });
+        return res
+          .status(404)
+          .send({ message: `Tipo ${nombre} no encontrado` });
       }
       return res.status(200).send(tipoEquipo);
     } catch (error) {
@@ -66,20 +68,20 @@ class CtrlTipoEquipo {
 
   async actualizarTipoEquipo(req, res) {
     try {
-      const { id } = await req.params
+      const { id } = await req.params;
       const data = req.body;
 
       data.fechaActualizacion = new Date();
 
       const findTipoEquipo = await modeloTipoEquipo.findByIdAndUpdate(
-        idTipoEquipo,
-        dataTipoEquipo,
+        id,
+        data,
         { new: true }
       );
 
       if (findTipoEquipo == undefined) {
         return res.status(404).send({
-          message: `El tipo de equipo con el id ${idTipoEquipo} no existe`,
+          message: `El tipo de equipo con el id ${id} no existe`,
         });
       }
 
