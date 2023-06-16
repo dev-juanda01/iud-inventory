@@ -1,7 +1,7 @@
 "use strict";
 
 const { validationResult, check } = require("express-validator");
-const { idExiste, usuarioExiste, estadoEquipoExiste, marcaEquipoExiste, tipoEquipoExiste} = require("../helpers/validators");
+const { inventarioExiste} = require("../helpers/validators");
 const { validarCampos } = require("../middlewares/validar_campos");
 const { validarJWT } = require("../middlewares/validar_jwt");
 const { validarRolAdmin } = require("../middlewares/validar_rol_admin");
@@ -28,10 +28,7 @@ router
     check("color", "El color es invalido - No es permitido").notEmpty(),
     check("fechaCompra", "La fecha de compra es invalida - No es permitida").isDate(),
     check("precio", "El precio es invalido - No es permitido").isNumeric(),
-    check("usuario").custom(usuarioExiste),
-    check("marca").custom(marcaEquipoExiste),
-    check("estado").custom(estadoEquipoExiste),
-    check("tipo").custom(tipoEquipoExiste),
+
     validarCampos,
     validarJWT,
     validarRolAdmin
@@ -40,7 +37,7 @@ router
   .put("/:id",
   [
     check("id", "Id invalido - No es un id de mongo").isMongoId(),
-    check("id").custom(idExiste),
+    check("id").custom(inventarioExiste),
     validarCampos,
     validarJWT,
     validarRolAdmin
@@ -48,7 +45,7 @@ router
   .delete("/:id",
   [
     check("id", "Id invalido - No es un id de mongo").isMongoId(),
-    check("id").custom(idExiste), 
+    check("id").custom(inventarioExiste), 
     validarCampos,
     validarJWT,
     validarRolAdmin

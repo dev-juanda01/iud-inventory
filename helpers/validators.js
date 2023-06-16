@@ -50,7 +50,7 @@ const inventarioExiste = async (id = "") => {
   const existeInventario = await Inventario.findById(id);
 
   if (!existeInventario) {
-    throw new Error(`El id del tinventario ${id} no existe en la base de datos`);
+    throw new Error(`El id del inventario ${id} no existe en la base de datos`);
   }
 };
 
@@ -78,5 +78,6 @@ module.exports = {
   estadoEquipoExiste,
   marcaEquipoExiste,
   tipoEquipoExiste
+  inventarioExiste
 };
 
