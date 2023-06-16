@@ -47,7 +47,11 @@ router
   )
   .delete(
     "/:id",
-    [check("id").custom(idExiste), validarCampos, validarJWT, validarRolAdmin],
+    [check("id").custom(idExiste),
+      validarCampos,
+      validarJWT,
+      validarRolAdmin
+    ],
 
     eliminarTipoEquipo
   );
