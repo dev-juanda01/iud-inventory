@@ -1,5 +1,9 @@
 const { validarCampos } = require("../middlewares/validar_campos");
 const Usuario = require("../models/usuarios");
+const EstadoEquipo = require("../models/estadoEquipo");
+const MarcaEquipo = require("../models/marcaEquipo");
+const TipoEquipo = require("../models/tipoEquipo");
+const Inventario = require("../models/inventarios");
 
 const correoExiste = async (correo = "") => {
   const existeCorreo = await Usuario.findOne({ correo });
@@ -9,13 +13,51 @@ const correoExiste = async (correo = "") => {
   }
 };
 
-const idExiste = async (id = "") => {
-  const existeId = await Usuario.findById(id);
 
-  if (!existeId) {
-    throw new Error(`El id ${id} no existe en la base de datos`);
+const usuarioExiste = async (id = "") => {
+  const existeUsuario = await Usuario.findById(id);
+
+  if (!existeUsuario) {
+    throw new Error(`El id del usuario ${id} no existe en la base de datos`);
   }
 };
+
+const estadoEquipoExiste = async (id = "") => {
+  const existeEstadoEquipo = await EstadoEquipo.findById(id);
+
+  if (!existeEstadoEquipo) {
+    throw new Error(`El id del estado equipo ${id} no existe en la base de datos`);
+  }
+};
+
+const marcaEquipoExiste = async (id = "") => {
+  const existeMarcaEquipo = await MarcaEquipo.findById(id);
+
+  if (!existeMarcaEquipo) {
+    throw new Error(`El id del la marca de equipo ${id} no existe en la base de datos`);
+  }
+};
+
+const tipoEquipoExiste = async (id = "") => {
+  const existeTipoEquipo = await TipoEquipo.findById(id);
+
+  if (!existeTipoEquipo) {
+    throw new Error(`El id del tipo de equipo ${id} no existe en la base de datos`);
+  }
+};
+
+const inventarioExiste = async (id = "") => {
+  const existeInventario = await Inventario.findById(id);
+
+  if (!existeInventario) {
+    throw new Error(`El id del tinventario ${id} no existe en la base de datos`);
+  }
+};
+
+
+
+
+
 
 // const contrasenaExiste = async (contrasena = "") => {
 
@@ -32,6 +74,9 @@ const idExiste = async (id = "") => {
 
 module.exports = {
   correoExiste,
-  idExiste,
+  usuarioExiste,
+  estadoEquipoExiste,
+  marcaEquipoExiste,
+  tipoEquipoExiste
 };
 

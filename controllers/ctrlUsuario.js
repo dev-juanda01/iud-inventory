@@ -100,7 +100,7 @@ class CtrlUsuario {
 
   async eliminarUsuario(req, res) {
     try {
-      let id = req.query.id;
+      const { id } = await req.params
 
       const usuario = await modeloUsuarios.findByIdAndDelete(id);
 
