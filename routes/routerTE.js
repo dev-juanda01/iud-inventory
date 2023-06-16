@@ -1,7 +1,7 @@
 "use strict";
 
 const { validationResult, check } = require("express-validator");
-const { idExiste } = require("../helpers/validators");
+const { tipoEquipoExiste } = require("../helpers/validators");
 const { validarCampos } = require("../middlewares/validar_campos");
 const { validarJWT } = require("../middlewares/validar_jwt");
 const { validarRolAdmin } = require("../middlewares/validar_rol_admin");
@@ -38,7 +38,7 @@ router
     "/:id",
     [
       check("id", "Id invalido - No es un id de mongo").isMongoId(),
-      check("id").custom(idExiste),
+      check("id").custom(tipoEquipoExiste),
       validarCampos,
       validarJWT,
       validarRolAdmin,
@@ -47,7 +47,7 @@ router
   )
   .delete(
     "/:id",
-    [check("id").custom(idExiste),
+    [check("id").custom(tipoEquipoExiste),
       validarCampos,
       validarJWT,
       validarRolAdmin
