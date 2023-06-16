@@ -66,10 +66,10 @@ class CtrlTipoEquipo {
 
   async actualizarTipoEquipo(req, res) {
     try {
-      let idTipoEquipo = req.query.id,
-        dataTipoEquipo = req.body;
+      const { id } = await req.params
+      const data = req.body;
 
-      dataTipoEquipo.fechaActualizacion = new Date();
+      data.fechaActualizacion = new Date();
 
       const findTipoEquipo = await modeloTipoEquipo.findByIdAndUpdate(
         idTipoEquipo,
