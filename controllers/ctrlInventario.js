@@ -85,10 +85,10 @@ class CtrlInventario {
   }
   async actualizarInventario(req, res) {
     try {
-      let id = req.query.id,
-        data = req.body;
+      const { id } = await req.params
+      const data = req.body;
 
-      // data.fechaActualizacion = new Date();
+      data.fechaActualizacion = new Date();
 
       const inventario = await modeloInventario.findByIdAndUpdate(id, data, {
         new: true,
@@ -108,7 +108,7 @@ class CtrlInventario {
   }
   async eliminarInventario(req, res) {
     try {
-      let id = req.query.id;
+      const { id } = await req.params
 
       const eliminado = await modeloInventario.findByIdAndDelete(id);
 
